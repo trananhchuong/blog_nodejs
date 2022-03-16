@@ -3,6 +3,8 @@ const app = express();
 const morgan = require("morgan");
 const path = require("path");
 const handlebars = require("express-handlebars");
+
+const route = require("./routes");
 const port = 3004;
 
 // config encode param if user pass by form
@@ -10,7 +12,7 @@ app.use(express.urlencoded({
   extended: true
 }));
 
-// config encode param if user pass by js: axios, httpRequest
+// config encode param if user pass by js: axios
 app.use(express.json());
 
 app.use(morgan("combined"));
@@ -29,29 +31,9 @@ app.set("views", path.join(__dirname, "resources/view"));
 app.use(express.static(path.join(__dirname, "public")));
 
 // route
-app.get("/", (req, res) => {
-  res.render("home");
-});
 
-app.get("/news", (req, res) => {
-  console.log("🚀 ~ file: index.js ~ line 29 ~ app.get ~ req", req.query )
-  res.render("news");
-});
+route(app);
 
-app.get("/search", (req, res) => {
-  res.render("search");
-});
-
-app.post("/search", (req, res) => {
-  console.log("🚀 ~ file: index.js ~ line 38 ~ app.post ~ req", req.body)
-  res.send("search");
-});
-
-app.get("/tin-tuc", (req, res) => {
-  // res.send("Tin tuc!");
-  res.setHeader("Content-Type", "application/json");
-  res.send(JSON.stringify({ a: 1, b: 2 }));
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
