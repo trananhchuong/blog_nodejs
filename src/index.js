@@ -5,6 +5,14 @@ const path = require("path");
 const handlebars = require("express-handlebars");
 const port = 3004;
 
+// config encode param if user pass by form
+app.use(express.urlencoded({
+  extended: true
+}));
+
+// config encode param if user pass by js: axios, httpRequest
+app.use(express.json());
+
 app.use(morgan("combined"));
 
 // Register `hbs.engine` with the Express app.
@@ -26,7 +34,17 @@ app.get("/", (req, res) => {
 });
 
 app.get("/news", (req, res) => {
+  console.log("🚀 ~ file: index.js ~ line 29 ~ app.get ~ req", req.query )
   res.render("news");
+});
+
+app.get("/search", (req, res) => {
+  res.render("search");
+});
+
+app.post("/search", (req, res) => {
+  console.log("🚀 ~ file: index.js ~ line 38 ~ app.post ~ req", req.body)
+  res.send("search");
 });
 
 app.get("/tin-tuc", (req, res) => {
