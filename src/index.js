@@ -8,14 +8,19 @@ const port = 3004;
 app.use(morgan("combined"));
 
 // Register `hbs.engine` with the Express app.
-app.engine("hbs", handlebars.engine({
-  extname: "hbs"
-}));
+app.engine(
+  "hbs",
+  handlebars.engine({
+    extname: "hbs",
+  })
+);
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "resources/view"));
 
+// config static path
 app.use(express.static(path.join(__dirname, "public")));
 
+// route
 app.get("/", (req, res) => {
   res.render("home");
 });
